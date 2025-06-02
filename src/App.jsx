@@ -1,9 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
 
 function App() {
   const [name, setName] = useState("");
   const [todolist, setTodolist] = useState([]);
+
+  //for local storage
+
+  useEffect(() => {
+    const saved = localStorage.getItem("todolist");
+    if (saved) {
+      setTodolist(JSON.parse(saved));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("todolist", JSON.stringify(todolist));
+  }, [todolist]);
 
   function handleType(event) {
     setName(event.target.value);
